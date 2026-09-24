@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+}
+
+model UploadBatch {
+  id          String        @id @default(cuid())
+  fileName    String
+  uploadedBy  String
+  flowType    String
+  station     String
+  recordCount Int
+  createdAt   DateTime      @default(now())
+  records     CargoRecord[]
+}
+
+model CargoRecord {
+  id             String    @id @default(cuid())
+  batchId        String
+  batch          UploadBatch @relation(fields: [batchId], references: [id])
+
+  ata            DateTime?
+  carrierName    String?
+  carrierCode    String?
+  flightNumber   String?
+  std            DateTime?
+  atd            DateTime?
+  aircraftType   String?
+  awbPrefix      String?
+  awbNumber      String?
+  origin         String?
+  destination    String?
+  boardingPoint  String?
+  pieces         Int?
+  weight         Float?
+
+  station        String
+  flowType       String
+  flightType     String?
+  cargoCategory  String?
+
+  movementDate   DateTime?
+
+  createdAt      DateTime  @default(now())
+
+  @@index([station, flowType, movementDate])
+}

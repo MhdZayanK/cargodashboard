@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/app/generated/prisma
+
+# local tools and scratch files
+/.agents/
+/.claude/
+/.cursor/
+/.devin/
+/.windsurf/
+/check.mjs
+/check.ts
+/reset-schema.js
+/response.json
+/skills-lock.json
